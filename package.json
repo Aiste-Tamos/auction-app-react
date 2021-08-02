@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
@@ -34,5 +35,25 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "css-loader": "^5.0.0",
+    "eslint": "7.11.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-formatjs": "^2.7.12",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "7.21.2",
+    "eslint-plugin-react-hooks": "4.1.2",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.4.2",
+    "node-sass": "^4.14.1",
+    "postcss-loader": "^4.0.4",
+    "prettier": "^2.1.2",
+    "style-loader": "^2.0.0",
+    "stylelint": "^13.7.2",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-sass-guidelines": "^7.1.0",
+    "stylelint-declaration-use-variable": "^1.7.2",
+    "stylelint-prettier": "^1.1.2"
   }
 }
