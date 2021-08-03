@@ -36,6 +36,8 @@ export const AuctionForm = ({
     
     if (validForm) {
       addAuction(auctionNameValue, auctionDescriptionValue);
+      setAuctionDescriptionValue("");
+      setAuctionNameValue("");
     }
   }
 

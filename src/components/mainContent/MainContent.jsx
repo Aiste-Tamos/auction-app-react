@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { AuctionForm } from "../auctionForm";
+import { AuctionsList } from "../auctionsList/AuctionsList";
 
 import "./mainContent.scss";
 
@@ -24,11 +25,13 @@ export const MainContent = () => {
     let copy = [...auctions];
     copy = [...copy, { name: auctionName, description: auctionDescription}];
     setAuctions(copy);
+
 }
 
   return (
     <div className={mainClassName}>
         <AuctionForm minNameLength="4" minDescriptionLength="4" addAuction={addAuction}/>
+        <AuctionsList auctions={auctions}/>
     </div>
   );
 };
