@@ -1,0 +1,12 @@
+.auction {
+    align-items: center;
+    border: 1px solid grey;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+
+    &__title {
+        font-weight: normal;
+        margin: 0;
+    }
+}

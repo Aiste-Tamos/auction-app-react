@@ -1,0 +1,7 @@
+.auction-list {
+    display: grid;
+
+    @media screen and (min-width: 600px) {
+        grid-template-columns: 1fr 1fr;
+    }
+}
