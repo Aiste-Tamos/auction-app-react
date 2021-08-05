@@ -1,6 +1,7 @@
 .auction {
     align-items: center;
     border: 1px solid grey;
+    border-radius: 2px;
     display: flex;
     flex-direction: column;
     padding: 10px;
@@ -8,5 +9,13 @@
     &__title {
         font-weight: normal;
         margin: 0;
+    }
+
+    &__btn {
+        align-self: flex-end;
+        background: rgba(rgb(243, 78, 180), 0.5);
+        border: none;
+        border-radius: 2px;
+        justify-self: flex-end;
     }
 }

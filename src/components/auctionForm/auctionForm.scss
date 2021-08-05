@@ -1,0 +1,17 @@
+.auction-form {
+    display: flex;
+    flex-direction: column;
+
+    &__label {
+        display: flex;
+        max-width: 400px;
+
+        &:last-child {
+            justify-self: end;
+        }
+    }
+
+    &__btn {
+        width: 150px;
+    }
+}
