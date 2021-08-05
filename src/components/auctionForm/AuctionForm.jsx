@@ -14,6 +14,7 @@ export const AuctionForm = ({
   const inputClass = `${mainClassName}__input`;
   const btnClass = `${mainClassName}__btn`;
   const labelClass = `${mainClassName}__label`;
+  const labelTextClass = `${labelClass}__text`;
 
   const handleNameChange = (e) => {
     setAuctionNameValue(e.target.value);
@@ -47,7 +48,7 @@ export const AuctionForm = ({
   return (
         <form onSubmit={handleSubmit} className={mainClassName}>
             <label className={labelClass}>
-            Auction Name
+            <span className={labelTextClass}>Auction Name</span>
               <input
                 className={inputClass}
                 id="name"
@@ -58,16 +59,17 @@ export const AuctionForm = ({
                 value={auctionNameValue}>
               </input>
             </label>
-            <label>
-            Description
-              <input
+            <label className={labelClass}>
+            <span className={labelTextClass}>Description</span>
+              <textarea
+                className={inputClass}
                 id="description"
-                type="text"
+                rows="3"
                 minLength={minDescriptionLength}
                 required
                 onChange={handleDescriptionChange}
                 value={auctionDescriptionValue}>
-              </input>
+              </textarea>
             </label>
           <button type="submit" className={btnClass}>Add Auction</button>
         </form>

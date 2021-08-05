@@ -1,17 +1,33 @@
 .auction-form {
+    align-items: center;
     display: flex;
     flex-direction: column;
 
     &__label {
         display: flex;
-        max-width: 400px;
+        flex-direction: column;
+        min-width: 220px;
+        padding: 10px;
 
-        &:last-child {
-            justify-self: end;
+        input, textarea {
+            width: 100%;
+        }
+
+        &__text {
+            min-width: 110px;
         }
     }
 
     &__btn {
+        padding: 5px;
         width: 150px;
+    }
+}
+
+@media screen and (min-width: 550px) {
+    .auction-form {
+        &__label {
+            width: 400px;
+        }
     }
 }

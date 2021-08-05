@@ -27,6 +27,7 @@ export const MainContent = () => {
   const [activeUserId, setActiveUserId] = useState(defaultUser ? defaultUser.id : null);
 
   const mainClassName = "main-content";
+  const userBtnsWrapper = `${mainClassName}__user-btn-wrapper`;
 
   
   useEffect(() => {
@@ -70,15 +71,18 @@ const handleUserClick = (e) => {
 
   return (
     <div className={mainClassName}>
-      {usersList.map(user => (
-        <UserBtn
-          key={user.id}
-          onClick={handleUserClick}
-          value={user.id}
-          className={user.id === activeUserId ? `${mainClassName}__user-btn--active` : `${mainClassName}__user-btn` }
-          userName={user.title}
-        />
-      ))} 
+      <div className={userBtnsWrapper}>
+          {usersList.map(user => (
+            <UserBtn
+              key={user.id}
+              onClick={handleUserClick}
+              value={user.id}
+              className={user.id === activeUserId ? `${mainClassName}__user-btn--active` : `${mainClassName}__user-btn` }
+              userName={user.title}
+            />
+          ))} 
+      </div>
+      
       <AuctionForm minNameLength="4" minDescriptionLength="4" addAuction={addAuction}/>
       <AuctionsList auctions={auctions} auctionState={auctionState} onBtnClick={changeAuctionState}/>
     </div>
