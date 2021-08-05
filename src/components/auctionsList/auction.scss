@@ -8,14 +8,27 @@
 
     &__title {
         font-weight: normal;
-        margin: 0;
+        margin: 10px 10px;
     }
 
     &__btn {
         align-self: flex-end;
         background: rgba(rgb(243, 78, 180), 0.5);
         border: none;
+        bottom: 0;
         border-radius: 2px;
         justify-self: flex-end;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .auction {
+        height: 150px;
+        position: relative;
+
+        &__btn {
+            position: absolute;
+            bottom: 10px;
+        }
     }
 }

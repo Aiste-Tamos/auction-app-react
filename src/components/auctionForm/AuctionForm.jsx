@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import classNames from "classnames";
 
 import "./auctionForm.scss";
 
 export const AuctionForm = ({
   addAuction,
+  className,
   minNameLength,
   minDescriptionLength,
  }) => {
@@ -11,6 +13,7 @@ export const AuctionForm = ({
   const [auctionDescriptionValue, setAuctionDescriptionValue] = useState("");
   
   const mainClassName = "auction-form";
+  const mainClass = classNames(mainClassName, className);
   const inputClass = `${mainClassName}__input`;
   const btnClass = `${mainClassName}__btn`;
   const labelClass = `${mainClassName}__label`;
@@ -46,7 +49,7 @@ export const AuctionForm = ({
   }
 
   return (
-        <form onSubmit={handleSubmit} className={mainClassName}>
+        <form onSubmit={handleSubmit} className={mainClass}>
             <label className={labelClass}>
             <span className={labelTextClass}>Auction Name</span>
               <input

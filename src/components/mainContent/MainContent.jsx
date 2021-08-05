@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { AuctionForm } from "../auctionForm";
 import { AuctionsList } from "../auctionsList/AuctionsList";
+import { Sidebar } from "../sidebar/Sidebar";
 import { UserBtn } from "../userBtn/UserBtn";
 
 import "./mainContent.scss";
@@ -28,6 +29,9 @@ export const MainContent = () => {
 
   const mainClassName = "main-content";
   const userBtnsWrapper = `${mainClassName}__user-btn-wrapper`;
+  const wrapperClass = `${mainClassName}__wrapper`;
+  const sideClass = `${mainClassName}__side`;
+  const contentClass = `${mainClassName}__content`;
 
   
   useEffect(() => {
@@ -80,9 +84,11 @@ const handleUserClick = (user) => {
             />
           ))} 
       </div>
-      
       <AuctionForm minNameLength="4" minDescriptionLength="4" addAuction={addAuction}/>
-      <AuctionsList auctions={auctions} auctionState={auctionState} onBtnClick={changeAuctionState}/>
+      <div className={wrapperClass}>
+        <Sidebar className={sideClass}/>
+        <AuctionsList className={contentClass} auctions={auctions} auctionState={auctionState} onBtnClick={changeAuctionState}/>
+      </div>
     </div>
   );
 };
