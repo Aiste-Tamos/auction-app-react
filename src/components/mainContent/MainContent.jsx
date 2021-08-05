@@ -61,12 +61,11 @@ export const MainContent = () => {
    }
 }
 
-const handleUserClick = (e) => {
-  setActiveUserId(Number(e.target.value));
-  console.log(activeUserId);
-  // if (defaultUser.id === 1) {
-  //   console.log('clicked 1');
-  // } else console.log('clicked 2');
+const handleUserClick = (user) => {
+  setActiveUserId(user);
+  if (user === 1) {
+    console.log('clicked 1');
+  } else console.log('clicked 2');
 };
 
   return (
@@ -75,8 +74,7 @@ const handleUserClick = (e) => {
           {usersList.map(user => (
             <UserBtn
               key={user.id}
-              onClick={handleUserClick}
-              value={user.id}
+              onClick={() => handleUserClick(user.id)}
               className={user.id === activeUserId ? `${mainClassName}__user-btn--active` : `${mainClassName}__user-btn` }
               userName={user.title}
             />
