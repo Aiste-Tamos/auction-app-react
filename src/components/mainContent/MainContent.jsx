@@ -9,7 +9,7 @@ import "./mainContent.scss";
 
 export const MainContent = () => {
   
-  const [auctions, setAuctions] = useState([]);
+  const [, setAuctions] = useState([]);
   const [isActive, setIsActive] = useState(false);
 
   const mainClassName = "main-content";
@@ -18,19 +18,18 @@ export const MainContent = () => {
   const sideClass = `${mainClassName}__side`;
   const contentClass = `${mainClassName}__content`;
 
+  const handleUserClick = (user) => {
+    setIsActive(!isActive);
+    data.activeUserId = user.id;
+    console.log(data, user);
+  }; 
+  
   const addAuction = (auctionName, auctionDescription) => {
     let list;
       list = data.users[data.activeUserId - 1].auctionsList;
     list.push({name: auctionName, description: auctionDescription})
     setAuctions(list);
-    console.log(list);
  }
-
-  const handleUserClick = (user) => {
-    setIsActive(!isActive);
-    data.activeUserId = user.id;
-    console.log(data, user);
-  };
 
   return (
     <div className={mainClassName}>
@@ -47,8 +46,16 @@ export const MainContent = () => {
       <AuctionForm minNameLength="4" minDescriptionLength="4" addAuction={addAuction}
       />
       <div className={wrapperClass}>
-        <Sidebar className={sideClass}/>
-        <AuctionsList className={contentClass} auctions={data.activeUserId === data.users[0].id ? data.users[0].auctionsList : data.users[1].auctionsList}/>
+        <Sidebar
+          className={sideClass}
+          activeAuctions={data.activeUserId === data.users[0].id ? data.users[1].auctionsList : data.users[0].auctionsList}
+        />
+        <AuctionsList
+          className={contentClass}
+          auctions={data.activeUserId === data.users[0].id ? data.users[0].auctionsList : data.users[1].auctionsList}
+          title="My auctions"
+          ownedAuction={true}
+        />
       </div>
     </div>
   );
