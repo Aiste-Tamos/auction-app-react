@@ -3,29 +3,19 @@ import { AuctionForm } from "../auctionForm";
 import { AuctionsList } from "../auctionsList/AuctionsList";
 import { Sidebar } from "../sidebar/Sidebar";
 import { UserBtn } from "../userBtn/UserBtn";
+import data from '../../auctions-sample.json';
 
 import "./mainContent.scss";
 
-const usersList = [
-    {
-        id: 1,
-        title: 'User 1',
-        isDefault: true,
-    },
-    {
-        id: 2,
-        title: 'User 2',
-        isDefault: false,
-    }
-];
+
 
 export const MainContent = () => {
+  
+  console.log(data);
 
   const [auctions, setAuctions] = useState([]);
-  const [auctionState, setAuctionState] = useState("start");
-  const [clicked, setClicked] = useState(false);
-  const defaultUser = usersList.some(user => user.isDefault === true);
-  const [activeUserId, setActiveUserId] = useState(defaultUser ? defaultUser.id : null);
+  // const defaultUser = usersList.some(user => user.isDefault === true);
+  // const [activeUserId, setActiveUserId] = useState(defaultUser ? defaultUser.id : null);
 
   const mainClassName = "main-content";
   const userBtnsWrapper = `${mainClassName}__user-btn-wrapper`;
@@ -34,60 +24,47 @@ export const MainContent = () => {
   const contentClass = `${mainClassName}__content`;
 
   
-  useEffect(() => {
-    const auctionsList = JSON.parse(localStorage.getItem('auctions'));
-    if (auctionsList) {
-      setAuctions(auctionsList);
-    }
-  }, []);
+//   useEffect(() => {
+//     const auctionsList = JSON.parse(localStorage.getItem('auctions'));
+//     if (auctionsList) {
+//       setAuctions(auctionsList);
+//     }
+//   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('auctions', JSON.stringify(auctions));
-  }, [auctions]);
+//   useEffect(() => {
+//     localStorage.setItem('auctions', JSON.stringify(auctions));
+//   }, [auctions]);
 
 
-  const addAuction = (auctionName, auctionDescription) => {
-    let copy = [...auctions];
-    copy = [...copy, { name: auctionName, description: auctionDescription}];
-    setAuctions(copy);
- }
+//   const addAuction = (auctionName, auctionDescription) => {
+//     let copy = [...auctions];
+//     copy = [...copy, { name: auctionName, description: auctionDescription}];
+//     setAuctions(copy);
+//  }
 
- const changeAuctionState = () => {
-   if (!clicked) {
-    var timeleft = 60;
-    var downloadTimer = setInterval(() => {
-    timeleft--;
-    setAuctionState(`00:${(timeleft).toLocaleString('en-US', {minimumIntegerDigits: 2})}`);
-    if(timeleft <= 0)
-        clearInterval(downloadTimer);
-    }, 1000);
-    setClicked(true);
-   }
-}
-
-const handleUserClick = (user) => {
-  setActiveUserId(user);
-  if (user === 1) {
-    console.log('clicked 1');
-  } else console.log('clicked 2');
-};
+  const handleUserClick = (user) => {
+    // return data.activeUserId === user.id;
+    console.log(user);
+  };
 
   return (
     <div className={mainClassName}>
       <div className={userBtnsWrapper}>
-          {usersList.map(user => (
+          {data.users.map(user => (
             <UserBtn
               key={user.id}
-              onClick={() => handleUserClick(user.id)}
-              className={user.id === activeUserId ? `${mainClassName}__user-btn--active` : `${mainClassName}__user-btn` }
-              userName={user.title}
+              onClick={() => handleUserClick(user)}
+              className={user.id === data.activeUserId ? `${mainClassName}__user-btn--active` : `${mainClassName}__user-btn` }
+              userName={user.name}
             />
           ))} 
       </div>
-      <AuctionForm minNameLength="4" minDescriptionLength="4" addAuction={addAuction}/>
+      <AuctionForm minNameLength="4" minDescriptionLength="4" 
+      // addAuction={addAuction}
+      />
       <div className={wrapperClass}>
         <Sidebar className={sideClass}/>
-        <AuctionsList className={contentClass} auctions={auctions} auctionState={auctionState} onBtnClick={changeAuctionState}/>
+        <AuctionsList className={contentClass} auctions={auctions}/>
       </div>
     </div>
   );

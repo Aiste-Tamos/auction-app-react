@@ -1,0 +1,41 @@
+{
+    "activeUserId": 1,
+    "users": [
+        { 
+            "name": "User 1",
+            "id": 1,
+            "auctionsList": [
+                {
+                    "name": "Vintage table",
+                    "description": "From 1950s",
+                    "lastBidUserId": 2,
+                    "timer": "00:00",
+                    "price": "60",
+                    "state": "closed"
+                },
+                {
+                    "name": "6 modern chairs",
+                    "description": "Used but great",
+                    "lastBidUserId": null,
+                    "timer": "00:00",
+                    "price": "0",
+                    "state": "closed"
+                }
+            ]
+        },
+        { 
+            "name": "User 2",
+            "id": 2,
+            "auctionsList": [
+                {
+                    "name": "New watch",
+                    "description": "With package",
+                    "lastBidUserId": 1,
+                    "timer": "00:10",
+                    "price": "30",
+                    "state": "active"
+                }
+            ]
+        }
+    ]
+}
