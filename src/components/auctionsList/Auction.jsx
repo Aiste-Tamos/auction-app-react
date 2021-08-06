@@ -5,8 +5,9 @@ import { AuctionStateContext } from '../../AuctionStateContext';
 import './auction.scss';
  
 export const Auction = ({ auction, id, ownedAuction, userId }) => {
-    // const [clicked, setClicked] = useState(false);
+    const [clicked, setClicked] = useState(false);
     const [auctionState, setAuctionState] = useContext(AuctionStateContext);
+    const [price, setPrice] = useState(null);
 
     const mainClassName = "auction";
     const titleClass = `${mainClassName}__title`;
@@ -17,21 +18,7 @@ export const Auction = ({ auction, id, ownedAuction, userId }) => {
 
     const changeAuctionState = () => {
         auctionState.users.find(user => user.id === userId).auctionsList.find(auct => auct.name === auction.name).state = "active";
-        console.log(auctionState);
         setAuctionState({...auctionState});
-    //     if (auctionState === "start" && !clicked) {
-    //       var timeleft = 60;
-    //       var downloadTimer = setInterval(() => {
-    //         timeleft--;
-    //         setAuctionState(`00:${(timeleft).toLocaleString('en-US', {minimumIntegerDigits: 2})}`);
-            
-    //         if(timeleft <= 0){
-    //             setAuctionState('closed');
-    //             clearInterval(downloadTimer);
-    //         }
-    //       }, 1000);
-    //       setClicked(true);
-    //    }
     };
     
     return (

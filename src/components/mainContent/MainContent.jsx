@@ -53,10 +53,10 @@ export const MainContent = () => {
       <AuctionForm minNameLength="4" minDescriptionLength="4" addAuction={addAuction}
       />
       <div className={wrapperClass}>
-        {/* <Sidebar
+        <Sidebar
           className={sideClass}
           activeAuctions={data.activeUserId === data.users[0].id ? data.users[1].auctionsList : data.users[0].auctionsList}
-        /> */}
+        />
         <AuctionsList
           className={contentClass}
           auctions={data.activeUserId === data.users[0].id ? data.users[0].auctionsList : data.users[1].auctionsList}
