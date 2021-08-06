@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { AuctionForm } from "../auctionForm";
 import { AuctionsList } from "../auctionsList/AuctionsList";
 import { Sidebar } from "../sidebar/Sidebar";
 import { UserBtn } from "../userBtn/UserBtn";
-import data from '../../auctions-sample.json';
+import { AuctionStateContext } from '../../AuctionStateContext';
 
 import "./mainContent.scss";
 
@@ -11,12 +11,15 @@ export const MainContent = () => {
   
   const [, setAuctions] = useState([]);
   const [isActive, setIsActive] = useState(false);
+  const [data, setData] = useContext(AuctionStateContext);
 
   const mainClassName = "main-content";
   const userBtnsWrapper = `${mainClassName}__user-btn-wrapper`;
   const wrapperClass = `${mainClassName}__wrapper`;
   const sideClass = `${mainClassName}__side`;
   const contentClass = `${mainClassName}__content`;
+
+  console.log(data);
 
   const handleUserClick = (user) => {
     setIsActive(!isActive);
@@ -30,6 +33,10 @@ export const MainContent = () => {
     list.push({name: auctionName, description: auctionDescription})
     setAuctions(list);
  }
+
+  useEffect(() => {
+    setData(data);
+  }, [setData]);
 
   return (
     <div className={mainClassName}>
@@ -46,15 +53,16 @@ export const MainContent = () => {
       <AuctionForm minNameLength="4" minDescriptionLength="4" addAuction={addAuction}
       />
       <div className={wrapperClass}>
-        <Sidebar
+        {/* <Sidebar
           className={sideClass}
           activeAuctions={data.activeUserId === data.users[0].id ? data.users[1].auctionsList : data.users[0].auctionsList}
-        />
+        /> */}
         <AuctionsList
           className={contentClass}
           auctions={data.activeUserId === data.users[0].id ? data.users[0].auctionsList : data.users[1].auctionsList}
           title="My auctions"
           ownedAuction={true}
+          userId={data.activeUserId}
         />
       </div>
     </div>

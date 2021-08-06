@@ -11,7 +11,7 @@
                     "lastBidUserId": 2,
                     "timer": "00:00",
                     "price": "60",
-                    "state": "closed"
+                    "state": "start"
                 },
                 {
                     "name": "6 modern chairs",
@@ -33,7 +33,7 @@
                     "lastBidUserId": 1,
                     "timer": "00:10",
                     "price": "30",
-                    "state": "active"
+                    "state": "start"
                 }
             ]
         }

@@ -5,7 +5,7 @@ import "./auctionsList.scss";
 
 import { Auction } from "./Auction";
 
-export const AuctionsList = ({ auctions, className, ownedAuction, ...other }) => {
+export const AuctionsList = ({ auctions, className, ownedAuction, userId, ...other }) => {
     const mainClassName = "auction-list";
     const mainClass = classNames(mainClassName, className);
 
@@ -13,7 +13,7 @@ export const AuctionsList = ({ auctions, className, ownedAuction, ...other }) =>
         <div className={mainClass} {...other}>
             {auctions.map((auction, id) => {
                 return (
-                    <Auction key={id} auction={auction} ownedAuction={ownedAuction}/>
+                    <Auction key={id} auction={auction} ownedAuction={ownedAuction} userId={userId}/>
                 )
             })}
         </div>
