@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { AuctionForm } from "../auctionForm";
 import { AuctionsList } from "../auctionsList/AuctionsList";
 import { Sidebar } from "../sidebar/Sidebar";
@@ -11,9 +11,8 @@ import "./mainContent.scss";
 
 export const MainContent = () => {
   
-  console.log(data);
-
   const [auctions, setAuctions] = useState([]);
+  const [isActive, setIsActive] = useState(false);
   // const defaultUser = usersList.some(user => user.isDefault === true);
   // const [activeUserId, setActiveUserId] = useState(defaultUser ? defaultUser.id : null);
 
@@ -36,15 +35,17 @@ export const MainContent = () => {
 //   }, [auctions]);
 
 
-//   const addAuction = (auctionName, auctionDescription) => {
-//     let copy = [...auctions];
-//     copy = [...copy, { name: auctionName, description: auctionDescription}];
-//     setAuctions(copy);
-//  }
+  const addAuction = (auctionName, auctionDescription) => {
+      const list = data.users[0].auctionsList;
+      list.push({name: auctionName, description: auctionDescription})
+      setAuctions(list);
+      console.log(list);
+ }
 
   const handleUserClick = (user) => {
-    // return data.activeUserId === user.id;
-    console.log(user);
+    setIsActive(!isActive);
+    data.activeUserId = user.id;
+    console.log(data, user);
   };
 
   return (
@@ -54,17 +55,16 @@ export const MainContent = () => {
             <UserBtn
               key={user.id}
               onClick={() => handleUserClick(user)}
-              className={user.id === data.activeUserId ? `${mainClassName}__user-btn--active` : `${mainClassName}__user-btn` }
+              isActive={user.id === data.activeUserId}
               userName={user.name}
             />
           ))} 
       </div>
-      <AuctionForm minNameLength="4" minDescriptionLength="4" 
-      // addAuction={addAuction}
+      <AuctionForm minNameLength="4" minDescriptionLength="4" addAuction={addAuction}
       />
       <div className={wrapperClass}>
         <Sidebar className={sideClass}/>
-        <AuctionsList className={contentClass} auctions={auctions}/>
+        <AuctionsList className={contentClass} auctions={data.activeUserId === data.users[0].id ? data.users[0].auctionsList : data.users[1].auctionsList}/>
       </div>
     </div>
   );

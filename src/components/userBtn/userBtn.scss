@@ -1,0 +1,30 @@
+.user-btn {
+    border: none;
+    border-radius: 50px;
+    height: 75px;
+    margin: 10px;
+    transition: all .2s;
+    width: 75px;
+
+    &:hover {
+        background-color: rgb(214, 214, 214);
+        cursor: pointer;
+        transform: scale(1.05);
+    }
+
+    &--active {
+        color: rgb(16, 131, 45);
+        background-color: rgb(237, 255, 220);
+        border: none;
+        border-radius: 50px;
+        height: 75px;
+        margin: 10px;
+        transition: all .2s;
+        width: 75px;
+
+        &:hover {
+            cursor: pointer;
+            transform: scale(1.05);
+        }
+    }
+}

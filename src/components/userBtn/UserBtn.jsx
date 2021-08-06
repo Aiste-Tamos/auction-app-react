@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 
 import "./userBtn.scss";
 
-export const UserBtn = ({ className, userName, onClick }) => {
+export const UserBtn = ({ isActive, userName, onClick }) => {
+
+  const mainClassName = "user-btn";
 
     return (
-        <button className={className} onClick={onClick}>{userName}</button>
+        <button className={isActive ? `${mainClassName}--active` : mainClassName} onClick={onClick}>{userName}</button>
       );
 }
