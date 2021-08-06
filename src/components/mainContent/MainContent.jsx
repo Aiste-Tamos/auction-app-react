@@ -7,14 +7,10 @@ import data from '../../auctions-sample.json';
 
 import "./mainContent.scss";
 
-
-
 export const MainContent = () => {
   
   const [auctions, setAuctions] = useState([]);
   const [isActive, setIsActive] = useState(false);
-  // const defaultUser = usersList.some(user => user.isDefault === true);
-  // const [activeUserId, setActiveUserId] = useState(defaultUser ? defaultUser.id : null);
 
   const mainClassName = "main-content";
   const userBtnsWrapper = `${mainClassName}__user-btn-wrapper`;
@@ -22,24 +18,12 @@ export const MainContent = () => {
   const sideClass = `${mainClassName}__side`;
   const contentClass = `${mainClassName}__content`;
 
-  
-//   useEffect(() => {
-//     const auctionsList = JSON.parse(localStorage.getItem('auctions'));
-//     if (auctionsList) {
-//       setAuctions(auctionsList);
-//     }
-//   }, []);
-
-//   useEffect(() => {
-//     localStorage.setItem('auctions', JSON.stringify(auctions));
-//   }, [auctions]);
-
-
   const addAuction = (auctionName, auctionDescription) => {
-      const list = data.users[0].auctionsList;
-      list.push({name: auctionName, description: auctionDescription})
-      setAuctions(list);
-      console.log(list);
+    let list;
+      list = data.users[data.activeUserId - 1].auctionsList;
+    list.push({name: auctionName, description: auctionDescription})
+    setAuctions(list);
+    console.log(list);
  }
 
   const handleUserClick = (user) => {
