@@ -19,7 +19,7 @@
                     "lastBidUserId": null,
                     "timer": "00:00",
                     "price": "0",
-                    "state": "closed"
+                    "state": "start"
                 }
             ]
         },
@@ -29,6 +29,14 @@
             "auctionsList": [
                 {
                     "name": "New watch",
+                    "description": "With package",
+                    "lastBidUserId": 1,
+                    "timer": "00:00",
+                    "price": "0",
+                    "state": "start"
+                },
+                {
+                    "name": "New watchs",
                     "description": "With package",
                     "lastBidUserId": 1,
                     "timer": "00:00",

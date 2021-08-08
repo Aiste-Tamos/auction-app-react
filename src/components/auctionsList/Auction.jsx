@@ -5,7 +5,7 @@ import { AuctionStateContext } from '../../AuctionStateContext';
 import './auction.scss';
  
 export const Auction = ({ auction, id, ownedAuction, userId }) => {
-    const [clicked, setClicked] = useState(false);
+    // const [clicked, setClicked] = useState(false);
     const [auctionState, setAuctionState] = useContext(AuctionStateContext);
 
     const mainClassName = "auction";
@@ -16,15 +16,14 @@ export const Auction = ({ auction, id, ownedAuction, userId }) => {
     const stickerClass = `${mainClassName}__sticker`;
 
     const changeAuctionState = () => {
-        if (auction.state === "start" && !clicked) {
+        if (auction.state === "start") {
           
           let currentUser = auctionState.users.find(user => user.id === auctionState.activeUserId);
           let currentAuction = currentUser.auctionsList.find(auct => auct === auction);
           auction.state = "active";
           setAuctionState({...auctionState, currentAuction});
           handleTimer(60);
-          setClicked(true);
-          console.log(auctionState);
+          console.log(currentAuction);
        }
     };
 
