@@ -33,7 +33,7 @@
                     "lastBidUserId": 1,
                     "timer": "00:10",
                     "price": "30",
-                    "state": "start"
+                    "state": "active"
                 }
             ]
         }

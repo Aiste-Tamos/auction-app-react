@@ -18,25 +18,26 @@ export const MainContent = () => {
   const wrapperClass = `${mainClassName}__wrapper`;
   const sideClass = `${mainClassName}__side`;
   const contentClass = `${mainClassName}__content`;
-
-  console.log(data);
-
+  
+  const userIsActive = data.users.find(user => user.id === data.activeUserId);
+  const allAuctions = data.users.map(x => x.auctionsList).flat();
+  const activeAuctions = allAuctions.filter(auction => auction.state === "active");
+ 
   const handleUserClick = (user) => {
     setIsActive(!isActive);
     data.activeUserId = user.id;
-    console.log(data, user);
   }; 
   
   const addAuction = (auctionName, auctionDescription) => {
     let list;
-      list = data.users[data.activeUserId - 1].auctionsList;
-    list.push({name: auctionName, description: auctionDescription})
+    list = data.users[data.activeUserId - 1].auctionsList;
+    list.push({name: auctionName, description: auctionDescription, state: "start"})
     setAuctions(list);
  }
 
   useEffect(() => {
     setData(data);
-  }, [setData]);
+  }, [setData, data]);
 
   return (
     <div className={mainClassName}>
@@ -55,11 +56,12 @@ export const MainContent = () => {
       <div className={wrapperClass}>
         <Sidebar
           className={sideClass}
-          activeAuctions={data.activeUserId === data.users[0].id ? data.users[1].auctionsList : data.users[0].auctionsList}
+          activeAuctions={activeAuctions}
+          bidAuctions={userIsActive.auctionsList}
         />
         <AuctionsList
           className={contentClass}
-          auctions={data.activeUserId === data.users[0].id ? data.users[0].auctionsList : data.users[1].auctionsList}
+          auctions={userIsActive.auctionsList}
           title="My auctions"
           ownedAuction={true}
           userId={data.activeUserId}
