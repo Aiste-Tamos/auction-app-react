@@ -37,11 +37,6 @@ export const MainContent = () => {
  }
 
   useEffect(() => {
-    setData(data);
-  }, [setData, data]);
-
-
-  useEffect(() => {
     const interval = setInterval(() => setTime(Date.now()), 1000);
     return () => {
       clearInterval(interval);

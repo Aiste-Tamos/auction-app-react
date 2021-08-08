@@ -4,7 +4,7 @@ import { AuctionStateContext } from '../../AuctionStateContext';
 
 import './auction.scss';
  
-export const Auction = ({ auction, id, ownedAuction, setTimer, userId }) => {
+export const Auction = ({ auction, id, ownedAuction, userId }) => {
     const [clicked, setClicked] = useState(false);
     const [auctionState, setAuctionState] = useContext(AuctionStateContext);
 
@@ -15,15 +15,16 @@ export const Auction = ({ auction, id, ownedAuction, setTimer, userId }) => {
     const btnClosedClass = classNames(btnClass, `${btnClass}--closed`);
     const stickerClass = `${mainClassName}__sticker`;
 
-    useEffect(() => {
-        setAuctionState(auctionState);
-      }, [setAuctionState, auctionState]);
-
     const changeAuctionState = () => {
         if (auction.state === "start" && !clicked) {
+          
+          let currentUser = auctionState.users.find(user => user.id === auctionState.activeUserId);
+          let currentAuction = currentUser.auctionsList.find(auct => auct === auction);
           auction.state = "active";
+          setAuctionState({...auctionState, currentAuction});
           handleTimer(60);
           setClicked(true);
+          console.log(auctionState);
        }
     };
 
@@ -36,6 +37,7 @@ export const Auction = ({ auction, id, ownedAuction, setTimer, userId }) => {
             if(timeleft <= 0){
               auction.state = ('closed');
               clearInterval(downloadTimer);
+              setAuctionState({...auctionState});
             }
           }, 1000);
        }

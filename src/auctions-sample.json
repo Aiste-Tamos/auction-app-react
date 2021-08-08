@@ -31,7 +31,7 @@
                     "name": "New watch",
                     "description": "With package",
                     "lastBidUserId": 1,
-                    "timer": "00:10",
+                    "timer": "00:00",
                     "price": "0",
                     "state": "start"
                 }
