@@ -10,7 +10,7 @@
                     "description": "From 1950s",
                     "lastBidUserId": 2,
                     "timer": "00:00",
-                    "price": "60",
+                    "price": "0",
                     "state": "start"
                 },
                 {
@@ -32,8 +32,8 @@
                     "description": "With package",
                     "lastBidUserId": 1,
                     "timer": "00:10",
-                    "price": "30",
-                    "state": "active"
+                    "price": "0",
+                    "state": "start"
                 }
             ]
         }

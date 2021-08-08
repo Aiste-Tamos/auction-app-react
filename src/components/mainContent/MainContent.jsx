@@ -12,6 +12,7 @@ export const MainContent = () => {
   const [, setAuctions] = useState([]);
   const [isActive, setIsActive] = useState(false);
   const [data, setData] = useContext(AuctionStateContext);
+  const [time, setTime] = useState(Date.now());
 
   const mainClassName = "main-content";
   const userBtnsWrapper = `${mainClassName}__user-btn-wrapper`;
@@ -26,18 +27,26 @@ export const MainContent = () => {
   const handleUserClick = (user) => {
     setIsActive(!isActive);
     data.activeUserId = user.id;
-  }; 
+  };
   
   const addAuction = (auctionName, auctionDescription) => {
     let list;
     list = data.users[data.activeUserId - 1].auctionsList;
-    list.push({name: auctionName, description: auctionDescription, state: "start"})
+    list.push({name: auctionName, description: auctionDescription, state: "start", timer: "00:60"})
     setAuctions(list);
  }
 
   useEffect(() => {
     setData(data);
   }, [setData, data]);
+
+
+  useEffect(() => {
+    const interval = setInterval(() => setTime(Date.now()), 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <div className={mainClassName}>
