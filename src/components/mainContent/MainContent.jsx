@@ -21,6 +21,7 @@ export const MainContent = () => {
   const contentClass = `${mainClassName}__content`;
   
   const userIsActive = data.users.find(user => user.id === data.activeUserId);
+  const userIsNotActive = data.users.find(user => user.id !== data.activeUserId);
   const allAuctions = data.users.map(x => x.auctionsList).flat();
   const activeAuctions = allAuctions.filter(auction => auction.state === "active");
  
@@ -32,8 +33,10 @@ export const MainContent = () => {
   const addAuction = (auctionName, auctionDescription) => {
     let list;
     list = data.users[data.activeUserId - 1].auctionsList;
-    list.push({name: auctionName, description: auctionDescription, state: "start", timer: "00:60"})
+    list.push({name: auctionName, description: auctionDescription, state: "start", timer: "00:60", lastBidUserId: null, price: "0"})
     setAuctions(list);
+    setData({...data});
+    console.log(data);
  }
 
   useEffect(() => {
@@ -61,7 +64,7 @@ export const MainContent = () => {
         <Sidebar
           className={sideClass}
           activeAuctions={activeAuctions}
-          bidAuctions={userIsActive.auctionsList}
+          bidAuctions={userIsNotActive.auctionsList}
         />
         <AuctionsList
           className={contentClass}
