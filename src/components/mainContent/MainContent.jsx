@@ -21,8 +21,8 @@ export const MainContent = () => {
   const contentClass = `${mainClassName}__content`;
   
   const userIsActive = data.users.find(user => user.id === data.activeUserId);
-  const userIsNotActive = data.users.find(user => user.id !== data.activeUserId);
   const allAuctions = data.users.map(x => x.auctionsList).flat();
+  const userBiddedAuctions = allAuctions.filter(auct => auct.lastBidUserId === data.activeUserId ? auct : "");
   const activeAuctions = allAuctions.filter(auction => auction.state === "active");
  
   const handleUserClick = (user) => {
@@ -64,12 +64,11 @@ export const MainContent = () => {
         <Sidebar
           className={sideClass}
           activeAuctions={activeAuctions}
-          bidAuctions={userIsNotActive.auctionsList}
+          bidAuctions={userBiddedAuctions}
         />
         <AuctionsList
           className={contentClass}
           auctions={userIsActive.auctionsList}
-          title="My auctions"
           ownedAuction={true}
           userId={data.activeUserId}
         />

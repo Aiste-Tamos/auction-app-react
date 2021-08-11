@@ -6,7 +6,7 @@ import './auction.scss';
  
 export const Auction = ({ auction, id, ownedAuction }) => {
     // const [clicked, setClicked] = useState(false);
-    const [auctionState, setAuctionState] = useContext(AuctionStateContext);
+    const [globalState, setGlobalState] = useContext(AuctionStateContext);
     const [showPlaceBid, setShowPlaceBid] = useState(false);
     const [showWinningBid, setShowWinningBid] = useState(false);
     const [priceValue, setPriceValue] = useState(0);
@@ -20,7 +20,7 @@ export const Auction = ({ auction, id, ownedAuction }) => {
     const priceFormClass = `${mainClassName}__price-form`;
     const priceSubmitbtn = `${mainClassName}__price-submit-btn`;
 
-    let currentUser = auctionState.users.find(user => user.id === auctionState.activeUserId);
+    let currentUser = globalState.users.find(user => user.id === globalState.activeUserId);
     let currentAuction = currentUser.auctionsList.find(auct => auct === auction);
     
     const handleTimer = (seconds) => {
@@ -35,7 +35,7 @@ export const Auction = ({ auction, id, ownedAuction }) => {
             auction.state = ('closed');
             clearInterval(downloadTimer);
             setShowWinningBid(true);
-            setAuctionState({...auctionState, currentAuction});
+            setGlobalState({...globalState, currentAuction});
         };
         }, 1000);
     }
@@ -46,19 +46,19 @@ export const Auction = ({ auction, id, ownedAuction }) => {
             if (auction.state === "start") {
                 auction.state = "active";
                 handleTimer(60);
+                setShowPlaceBid(false);
+                setGlobalState({ ...globalState });
             }
         };
         if (currentUser.auctionsList.find(auc => auc !== currentAuction)) {
-            setShowPlaceBid(false);
+            setShowPlaceBid(true);
         }
-
-        setAuctionState({ ...auctionState, currentAuction });
     };
 
     const handlePriceSubmit = (e) => {
         e.preventDefault();
         setPriceValue(auction.price)
-        setAuctionState({ ...auctionState, currentAuction });
+        setGlobalState({ ...globalState, currentAuction });
         console.log(priceValue)
     }
 

@@ -11,9 +11,9 @@ export const AuctionsList = ({ auctions, className, ownedAuction, setTimer, user
 
     return (
         <div className={mainClass} {...other}>
-            {auctions.map((auction, id) => {
+            {auctions.map((auction) => {
                 return (
-                    <Auction key={id} auction={auction} ownedAuction={ownedAuction} userId={userId} setTimer={setTimer}/>
+                    <Auction key={auction.name} auction={auction} ownedAuction={ownedAuction} userId={userId} setTimer={setTimer}/>
                 )
             })}
         </div>
