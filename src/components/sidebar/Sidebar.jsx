@@ -13,9 +13,9 @@ export const Sidebar = ({ activeAuctions, bidAuctions, className, ...other }) =>
     return (
         <div className={mainClass} {...other}>
             <h4 className={titleClass}>Active auctions:</h4>
-            <AuctionsList auctions={activeAuctions} className={auctionsListClass}/>
+            <AuctionsList auctions={activeAuctions} showForOwner={false} className={auctionsListClass}/>
             <h4 className={titleClass}>Auctions I have bid in:</h4>
-            <AuctionsList auctions={bidAuctions} className={auctionsListClass} />
+            <AuctionsList auctions={bidAuctions} showForOwner={false} className={auctionsListClass} />
         </div>
     );
 }

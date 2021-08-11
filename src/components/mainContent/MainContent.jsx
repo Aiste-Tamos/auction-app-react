@@ -69,7 +69,7 @@ export const MainContent = () => {
         <AuctionsList
           className={contentClass}
           auctions={userIsActive.auctionsList}
-          ownedAuction={true}
+          showForOwner={true}
           userId={data.activeUserId}
         />
       </div>

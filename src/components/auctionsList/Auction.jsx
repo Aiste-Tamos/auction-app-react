@@ -4,7 +4,7 @@ import { AuctionStateContext } from '../../AuctionStateContext';
 
 import './auction.scss';
  
-export const Auction = ({ auction, id, ownedAuction }) => {
+export const Auction = ({ auction, showForOwner }) => {
     // const [clicked, setClicked] = useState(false);
     const [globalState, setGlobalState] = useContext(AuctionStateContext);
     const [showPlaceBid, setShowPlaceBid] = useState(false);
@@ -16,10 +16,11 @@ export const Auction = ({ auction, id, ownedAuction }) => {
     const descriptionClass = `${mainClassName}__description`;
     const btnClass = `${mainClassName}__btn`;
     const btnClosedClass = classNames(btnClass, `${btnClass}--closed`);
-    const stickerClass = `${mainClassName}__sticker`;
+    // const stickerClass = `${mainClassName}__sticker`;
     const priceFormClass = `${mainClassName}__price-form`;
     const priceSubmitbtn = `${mainClassName}__price-submit-btn`;
 
+    // let isOwner = auctionOwnerId === globalState.activeUserId;
     let currentUser = globalState.users.find(user => user.id === globalState.activeUserId);
     let currentAuction = currentUser.auctionsList.find(auct => auct === auction);
     
@@ -35,24 +36,21 @@ export const Auction = ({ auction, id, ownedAuction }) => {
             auction.state = ('closed');
             clearInterval(downloadTimer);
             setShowWinningBid(true);
-            setGlobalState({...globalState, currentAuction});
+            console.log(globalState);
+            console.log({ ...globalState, currentAuction });
+            setGlobalState({ ...globalState, currentAuction });
         };
         }, 1000);
     }
 
     const changeAuctionState = () => {
     
-        if (currentUser.auctionsList.find(auc => auc === currentAuction)) {
-            if (auction.state === "start") {
-                auction.state = "active";
+            if (currentAuction.state === "start") {
+                currentAuction.state = "active";
                 handleTimer(60);
                 setShowPlaceBid(false);
                 setGlobalState({ ...globalState });
-            }
         };
-        if (currentUser.auctionsList.find(auc => auc !== currentAuction)) {
-            setShowPlaceBid(true);
-        }
     };
 
     const handlePriceSubmit = (e) => {
@@ -67,24 +65,32 @@ export const Auction = ({ auction, id, ownedAuction }) => {
     }
     
     return (
-        <div id={id} name="auction" className="auction">
-            {ownedAuction &&
+        <div id={auction.name} name="auction" className="auction">
+            {/* {ownedAuction &&
                 <span className={stickerClass}>My auction</span>
-            }
+            } */}
             <h3 className={titleClass}>{auction.name}</h3>
             <span className={descriptionClass}>{auction.description}</span>
-            <button className={auction.state !== "closed" ? btnClass : btnClosedClass} onClick={changeAuctionState}>
+            {showForOwner ? (
+                <button className={auction.state !== "closed" ? btnClass : btnClosedClass} onClick={changeAuctionState}>
             {auction.state === "active" ? auction.timer : auction.state}
             </button>
-            {showPlaceBid &&
-                <form onSubmit={handlePriceSubmit} className={priceFormClass}>
+            ) : <>
+               {auction.timer}
+            
+            <form onSubmit={handlePriceSubmit} className={priceFormClass}>
                 <h4>Bid:</h4>
                 <label>
                 <input type="number" pattern="[0–9]*" onChange={handlePriceChange} />
                 </label>
                 <button className={priceSubmitbtn} type="submit" value="Submit">Place Bid</button>
-            </form>
+                    </form>
+                    </>
             }
+            
+            
+                
+            
             {showWinningBid && auction.price > 0 ? (
                 <div>
                     <h4>Winning bid: {auction.price}&euro;</h4>
