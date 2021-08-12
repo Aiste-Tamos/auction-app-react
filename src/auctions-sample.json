@@ -8,7 +8,7 @@
                 {
                     "name": "Vintage table",
                     "description": "From 1950s",
-                    "lastBidUserId": 2,
+                    "lastBidUserId": null,
                     "timer": "00:00",
                     "price": "0",
                     "state": "start"
@@ -30,7 +30,7 @@
                 {
                     "name": "New watch",
                     "description": "With package",
-                    "lastBidUserId": 1,
+                    "lastBidUserId": null,
                     "timer": "00:00",
                     "price": "0",
                     "state": "start"
@@ -38,7 +38,7 @@
                 {
                     "name": "Old watch",
                     "description": "With package",
-                    "lastBidUserId": 1,
+                    "lastBidUserId": null,
                     "timer": "00:00",
                     "price": "0",
                     "state": "start"

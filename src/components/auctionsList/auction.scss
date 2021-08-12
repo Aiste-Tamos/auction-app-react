@@ -30,24 +30,29 @@
         }
     }
 
-    &__sticker {
+    &__wrapper {
         align-items: flex-end;
-        background: rgba(rgb(245, 177, 219), 0.5);
+        bottom: 0;
         display: flex;
-        font-size: 14px;
-        height: 100px;
-        left: -45px;
-        justify-content: center;
+        justify-content: space-between;
+        padding: 10px;
         position: absolute;
-        top: -58px;
-        width: 100px;
-        -webkit-transform: rotate(-40deg);
+        width: 90%;
+    }
+
+    &__timer {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    &__info {
+        font-size: 18px;
+        font-weight: bold;
+        padding: 10px 0;
     }
 
     &__price-form {
         align-self: flex-start;
-        bottom: 10px;
-        position: absolute;
 
         h4 {
             font-weight: normal;
@@ -82,10 +87,6 @@
         &__btn {
             position: absolute;
             bottom: 10px;
-        }
-
-        &__sticker {
-            display: none;
         }
     }
 }
