@@ -9,7 +9,7 @@
                     "name": "Vintage table",
                     "description": "From 1950s",
                     "lastBidUserId": null,
-                    "timer": "00:00",
+                    "auctionEndTime": null,
                     "price": "0",
                     "state": "start"
                 },
@@ -17,7 +17,7 @@
                     "name": "6 modern chairs",
                     "description": "Used but great",
                     "lastBidUserId": null,
-                    "timer": "00:00",
+                    "auctionEndTime": null,
                     "price": "0",
                     "state": "start"
                 }
@@ -31,7 +31,7 @@
                     "name": "New watch",
                     "description": "With package",
                     "lastBidUserId": null,
-                    "timer": "00:00",
+                    "auctionEndTime": null,
                     "price": "0",
                     "state": "start"
                 },
@@ -39,7 +39,7 @@
                     "name": "Old watch",
                     "description": "With package",
                     "lastBidUserId": null,
-                    "timer": "00:00",
+                    "auctionEndTime": null,
                     "price": "0",
                     "state": "start"
                 }

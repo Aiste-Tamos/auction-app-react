@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { AuctionForm } from "../auctionForm";
 import { AuctionsList } from "../auctionsList/AuctionsList";
 import { Sidebar } from "../sidebar/Sidebar";
@@ -11,7 +11,6 @@ export const MainContent = () => {
   const [, setAuctions] = useState([]);
   const [isActive, setIsActive] = useState(false);
   const [data, setData] = useContext(AuctionStateContext);
-  const [time, setTime] = useState(Date.now());
 
   const mainClassName = "main-content";
   const userBtnsWrapper = `${mainClassName}__user-btn-wrapper`;
@@ -41,21 +40,13 @@ export const MainContent = () => {
       name: auctionName,
       description: auctionDescription,
       state: "start",
-      timer: "00:60",
+      auctionEndTime: null,
       lastBidUserId: null,
       price: "0",
     });
     setAuctions(list);
     setData({ ...data });
-    console.log(data);
   };
-
-  useEffect(() => {
-    const interval = setInterval(() => setTime(Date.now()), 1000);
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
 
   return (
     <div className={mainClassName}>

@@ -8,7 +8,6 @@ import { Auction } from "./Auction";
 export const AuctionsList = ({
   auctions,
   className,
-  setTimer,
   showForOwner,
   showBidInput,
   setShowBidInput,
@@ -29,7 +28,6 @@ export const AuctionsList = ({
             showBidInput={showBidInput}
             setShowBidInput={setShowBidInput}
             userId={userId}
-            setTimer={setTimer}
           />
         );
       })}

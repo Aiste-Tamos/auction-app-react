@@ -4,16 +4,19 @@ import { AuctionStateContext } from "../../AuctionStateContext";
 
 import "./auction.scss";
 
-export const Auction = ({
-  auction,
-  showBidInput,
-  showForOwner,
-  setShowBidInput,
-}) => {
+export const Auction = ({ auction, showBidInput, showForOwner }) => {
   const [globalState, setGlobalState] = useContext(AuctionStateContext);
   const [showWinningBid, setShowWinningBid] = useState(false);
   const [priceValue, setPriceValue] = useState(0);
-  const [bidPrice, setBidPrice] = useState(false);
+  const [timeleft, setTimeleft] = useState(
+    `00:` +
+      Math.round((auction.auctionEndTime - Date.now()) / 1000).toLocaleString(
+        "en-US",
+        {
+          minimumIntegerDigits: 2,
+        }
+      )
+  );
 
   const mainClassName = "auction";
   const titleClass = `${mainClassName}__title`;
@@ -40,15 +43,6 @@ export const Auction = ({
 
   let currentAuction = otherUser.auctionsList.find((auct) => auct === auction);
 
-  const checkUser = () => {
-    if (currentUser) {
-      auction = currentOwnedAuction;
-    }
-    if (otherUser) {
-      auction = currentUser;
-    }
-  };
-
   const prevPriceRef = useRef();
 
   useEffect(() => {
@@ -57,33 +51,37 @@ export const Auction = ({
 
   const prevPrice = prevPriceRef.current;
 
-  const handleTimer = (auct, seconds) => {
-    var timeleft = seconds;
+  useEffect(() => {
     var downloadTimer = setInterval(() => {
-      timeleft--;
-      auct.timer = `00:${timeleft.toLocaleString("en-US", {
+      let seconds;
+      let diff = Math.abs(
+        Math.round((auction.auctionEndTime - Date.now()) / 1000)
+      );
+      seconds = `00:${diff.toLocaleString("en-US", {
         minimumIntegerDigits: 2,
       })}`;
-      auct.state = "active";
-
-      if (timeleft <= 0) {
-        auct.state = "closed";
-        setShowBidInput(false);
+      setTimeleft(seconds);
+      if (timeleft === "00:00") {
+        auction.state = "closed";
         clearInterval(downloadTimer);
-        setShowWinningBid(true);
-        setGlobalState({ ...globalState });
+        if (auction.price > 0) {
+          setShowWinningBid(true);
+        }
       }
-
-      if (bidPrice) {
-        clearInterval(downloadTimer);
-      }
+      setGlobalState({ ...globalState });
     }, 1000);
-  };
+    return () => {
+      clearInterval(downloadTimer);
+    };
+  }, [auction, timeleft, globalState, setGlobalState]);
 
   const changeAuctionState = () => {
     if (currentOwnedAuction.state === "start") {
       currentOwnedAuction.state = "active";
-      handleTimer(currentOwnedAuction, 60);
+      let dateNow = new Date();
+      currentOwnedAuction.auctionEndTime = new Date(
+        dateNow.setSeconds(dateNow.getSeconds() + 59)
+      );
       setGlobalState({ ...globalState });
     }
   };
@@ -103,12 +101,12 @@ export const Auction = ({
   };
 
   const addSeconds = () => {
-    let time = currentAuction.timer;
-    let timeToAdd = 10;
-    let timeArr = time.split(":");
-    const newTime = timeArr[1] > 50 ? 60 : +timeArr[1] + timeToAdd;
-    handleTimer(currentAuction, newTime);
-    setBidPrice(true);
+    console.log(typeof currentAuction.auctionEndTime);
+    currentAuction.auctionEndTime = new Date(
+      currentAuction.auctionEndTime.setSeconds(
+        currentAuction.auctionEndTime.getSeconds() + 10
+      )
+    );
   };
 
   const handlePriceChange = (e) => {
@@ -127,7 +125,7 @@ export const Auction = ({
           className={auction.state !== "closed" ? btnClass : btnClosedClass}
           onClick={changeAuctionState}
         >
-          {auction.state === "active" ? auction.timer : auction.state}
+          {auction.state === "active" ? timeleft : auction.state}
         </button>
       )}
       {showBidInput && (
@@ -146,16 +144,14 @@ export const Auction = ({
               Place Bid
             </button>
           </form>
-          <span className={timerClassName}>{auction.timer}</span>
+          <span className={timerClassName}>{timeleft}</span>
         </div>
       )}
-      {showWinningBid && checkUser ? (
+      {showWinningBid && (
         <div>
           <h4>Winning bid: {auction.price}&euro;</h4>
           <p>User id: {auction.lastBidUserId}</p>
         </div>
-      ) : (
-        ""
       )}
     </div>
   );

@@ -15,7 +15,6 @@ export const Sidebar = ({
   const mainClass = classNames(mainClassName, className);
   const auctionsListClass = `${mainClassName}__auctions-list`;
   const titleClass = `${mainClassName}__title`;
-  const infoClass = `${mainClassName}__info`;
 
   return (
     <div className={mainClass} {...other}>
