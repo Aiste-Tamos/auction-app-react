@@ -4,13 +4,32 @@
     border-radius: 2px;
     display: flex;
     flex-direction: column;
+    max-height: 250px;
     padding: 10px;
     position: relative;
-    overflow: hidden;
 
     &__title {
         font-weight: normal;
         margin: 10px 10px;
+    }
+
+    &__description {
+        overflow-y: auto;
+        margin-bottom: 10px;
+
+        &::-webkit-scrollbar {
+            width: 5px;
+        }
+        
+        &::-webkit-scrollbar-track {
+            border-radius: 2px;
+            background-color: rgb(209, 209, 209);
+        }
+        
+        &::-webkit-scrollbar-thumb {
+            border-radius: 2px;
+            background-color: rgb(140, 179, 140);
+        }
     }
 
     &__btn {
@@ -31,16 +50,15 @@
     }
 
     &__wrapper {
-        align-items: flex-end;
         bottom: 0;
         display: flex;
-        justify-content: space-between;
         padding: 10px;
-        position: absolute;
+        justify-content: space-between;
         width: 90%;
     }
 
     &__timer {
+        align-self: flex-end;
         font-size: 18px;
         font-weight: bold;
     }
@@ -52,7 +70,10 @@
     }
 
     &__price-form {
-        align-self: flex-start;
+        display: flex;
+        flex-direction: column;
+        margin-right: 5px;
+        width: 50%;
 
         h4 {
             font-weight: normal;
@@ -73,20 +94,32 @@
         border: none;
         border-radius: 2px;
         cursor: pointer;
-        margin-left: 5px;
+        margin-top: 5px;
         padding: 7px;
         text-transform: uppercase;
+        max-width: 150px;
     }
 }
 
 @media screen and (min-width: 600px) {
     .auction {
-        height: 150px;
-        position: relative;
+        height: 100%;
+        justify-content: space-between;
 
-        &__btn {
+        &__wrapper {
+            display: grid;
+            grid-template-columns: 1fr min-content;
             position: absolute;
-            bottom: 10px;
         }
+
+        &__price-form {
+            margin-right: 5px;
+            width: 90%;
+        }
+
+        &__timer {
+            align-self: end;
+        }
+
     }
 }

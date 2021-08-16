@@ -4,21 +4,30 @@ import { AuctionStateContext } from "../../AuctionStateContext";
 
 import "./auction.scss";
 
-export const Auction = ({ auction, showBidInput, showForOwner }) => {
+export const Auction = ({ auction, className, showBidInput, showForOwner }) => {
   const [globalState, setGlobalState] = useContext(AuctionStateContext);
   const [showWinningBid, setShowWinningBid] = useState(false);
   const [priceValue, setPriceValue] = useState(0);
-  const [timeleft, setTimeleft] = useState(
-    `00:` +
-      Math.round((auction.auctionEndTime - Date.now()) / 1000).toLocaleString(
-        "en-US",
-        {
-          minimumIntegerDigits: 2,
-        }
-      )
-  );
+
+  const calculateTimeleft = () => {
+    if (auction.auctionEndTime === null) {
+      return "01:00";
+    }
+    let diff = Math.round((auction.auctionEndTime - new Date()) / 1000);
+
+    // return `00:${diff.toLocaleString("en-US", {
+    //   minimumIntegerDigits: 2,
+    // })}`;
+    let seconds = `00:${diff.toLocaleString("en-US", {
+      minimumIntegerDigits: 2,
+    })}`;
+    return seconds;
+  };
+
+  const [timeleft, setTimeleft] = useState(calculateTimeleft());
 
   const mainClassName = "auction";
+  const mainClass = classNames(mainClassName, className);
   const titleClass = `${mainClassName}__title`;
   const descriptionClass = `${mainClassName}__description`;
   const btnClass = `${mainClassName}__btn`;
@@ -53,35 +62,41 @@ export const Auction = ({ auction, showBidInput, showForOwner }) => {
 
   useEffect(() => {
     var downloadTimer = setInterval(() => {
-      let seconds;
-      let diff = Math.abs(
-        Math.round((auction.auctionEndTime - Date.now()) / 1000)
-      );
-      seconds = `00:${diff.toLocaleString("en-US", {
-        minimumIntegerDigits: 2,
-      })}`;
-      setTimeleft(seconds);
-      if (timeleft === "00:00") {
-        auction.state = "closed";
-        clearInterval(downloadTimer);
-        if (auction.price > 0) {
-          setShowWinningBid(true);
+      if (auction.state === "active") {
+        let dateNow = new Date();
+        if (auction.auctionEndTime === null) {
+          dateNow.setSeconds(dateNow.getSeconds() + 60);
+          auction.auctionEndTime = dateNow;
+        } else {
+          // auction.auctionEndTime = new Date(auction.auctionEndTime) - dateNow;
         }
+        let seconds = calculateTimeleft();
+        setTimeleft(seconds);
+        console.log(seconds);
+        if (seconds === "00:-00") {
+          auction.state = "closed";
+          clearInterval(downloadTimer);
+          if (auction.price > 0) {
+            setShowWinningBid(true);
+          }
+        }
+        setGlobalState({ ...globalState });
       }
-      setGlobalState({ ...globalState });
     }, 1000);
     return () => {
       clearInterval(downloadTimer);
     };
-  }, [auction, timeleft, globalState, setGlobalState]);
+  }, []);
 
   const changeAuctionState = () => {
     if (currentOwnedAuction.state === "start") {
       currentOwnedAuction.state = "active";
       let dateNow = new Date();
+
       currentOwnedAuction.auctionEndTime = new Date(
         dateNow.setSeconds(dateNow.getSeconds() + 59)
       );
+
       setGlobalState({ ...globalState });
     }
   };
@@ -101,7 +116,6 @@ export const Auction = ({ auction, showBidInput, showForOwner }) => {
   };
 
   const addSeconds = () => {
-    console.log(typeof currentAuction.auctionEndTime);
     currentAuction.auctionEndTime = new Date(
       currentAuction.auctionEndTime.setSeconds(
         currentAuction.auctionEndTime.getSeconds() + 10
@@ -114,7 +128,7 @@ export const Auction = ({ auction, showBidInput, showForOwner }) => {
   };
 
   return (
-    <div id={auction.name} name="auction" className="auction">
+    <div id={auction.name} name="auction" className={mainClass}>
       <h3 className={titleClass}>{auction.name}</h3>
       <span className={descriptionClass}>{auction.description}</span>
       {auction.state === "active" && auction.price > 0 && (

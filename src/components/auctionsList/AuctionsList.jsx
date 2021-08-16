@@ -7,6 +7,7 @@ import { Auction } from "./Auction";
 
 export const AuctionsList = ({
   auctions,
+  auctionClassName,
   className,
   showForOwner,
   showBidInput,
@@ -22,6 +23,7 @@ export const AuctionsList = ({
       {auctions.map((auction) => {
         return (
           <Auction
+            className={auctionClassName}
             key={auction.name}
             auction={auction}
             showForOwner={showForOwner}

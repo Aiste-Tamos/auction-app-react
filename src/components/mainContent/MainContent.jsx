@@ -34,18 +34,20 @@ export const MainContent = () => {
   };
 
   const addAuction = (auctionName, auctionDescription) => {
-    let list;
-    list = data.users[data.activeUserId - 1].auctionsList;
-    list.push({
+    const newAuction = {
       name: auctionName,
       description: auctionDescription,
       state: "start",
       auctionEndTime: null,
       lastBidUserId: null,
       price: "0",
-    });
-    setAuctions(list);
+    };
+    const list = [...userIsActive.auctionsList, newAuction];
+    userIsActive.auctionsList = list;
     setData({ ...data });
+    setAuctions(list);
+    console.log(list);
+    console.log(data);
   };
 
   return (

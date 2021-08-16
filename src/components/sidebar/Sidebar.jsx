@@ -15,11 +15,13 @@ export const Sidebar = ({
   const mainClass = classNames(mainClassName, className);
   const auctionsListClass = `${mainClassName}__auctions-list`;
   const titleClass = `${mainClassName}__title`;
+  const auctionClassName = `${mainClassName}__auction`;
 
   return (
     <div className={mainClass} {...other}>
       <h4 className={titleClass}>Active auctions:</h4>
       <AuctionsList
+        auctionClassName={auctionClassName}
         auctions={activeAuctions}
         showForOwner={false}
         showBidInput={showBidInput}
