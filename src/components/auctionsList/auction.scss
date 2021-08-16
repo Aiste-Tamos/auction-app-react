@@ -69,6 +69,16 @@
         padding: 10px 0;
     }
 
+    &__winner-info {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+
+        h4, p {
+            margin: 0;
+        }
+    }
+
     &__price-form {
         display: flex;
         flex-direction: column;

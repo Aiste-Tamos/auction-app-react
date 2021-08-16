@@ -6,21 +6,18 @@ import "./auction.scss";
 
 export const Auction = ({ auction, className, showBidInput, showForOwner }) => {
   const [globalState, setGlobalState] = useContext(AuctionStateContext);
-  const [showWinningBid, setShowWinningBid] = useState(false);
   const [priceValue, setPriceValue] = useState(0);
 
   const calculateTimeleft = () => {
     if (auction.auctionEndTime === null) {
-      return "01:00";
+      return 60;
     }
-    let diff = Math.round((auction.auctionEndTime - new Date()) / 1000);
-
-    // return `00:${diff.toLocaleString("en-US", {
-    //   minimumIntegerDigits: 2,
-    // })}`;
-    let seconds = `00:${diff.toLocaleString("en-US", {
+    let diff = Math.abs(
+      Math.round((auction.auctionEndTime - new Date()) / 1000)
+    );
+    let seconds = diff.toLocaleString("en-US", {
       minimumIntegerDigits: 2,
-    })}`;
+    });
     return seconds;
   };
 
@@ -37,6 +34,7 @@ export const Auction = ({ auction, className, showBidInput, showForOwner }) => {
   const priceSubmitbtn = `${mainClassName}__price-submit-btn`;
   const timerClassName = `${mainClassName}__timer`;
   const infoClass = `${mainClassName}__info`;
+  const winnerInfoClass = `${mainClassName}__winner-info`;
 
   let currentUser = globalState.users.find(
     (user) => user.id === globalState.activeUserId
@@ -72,15 +70,12 @@ export const Auction = ({ auction, className, showBidInput, showForOwner }) => {
         }
         let seconds = calculateTimeleft();
         setTimeleft(seconds);
-        console.log(seconds);
-        if (seconds === "00:-00") {
+        if (seconds === "00") {
           auction.state = "closed";
           clearInterval(downloadTimer);
-          if (auction.price > 0) {
-            setShowWinningBid(true);
-          }
         }
         setGlobalState({ ...globalState });
+        console.log(globalState);
       }
     }, 1000);
     return () => {
@@ -94,7 +89,7 @@ export const Auction = ({ auction, className, showBidInput, showForOwner }) => {
       let dateNow = new Date();
 
       currentOwnedAuction.auctionEndTime = new Date(
-        dateNow.setSeconds(dateNow.getSeconds() + 59)
+        dateNow.setSeconds(dateNow.getSeconds() + 5)
       );
 
       setGlobalState({ ...globalState });
@@ -134,12 +129,20 @@ export const Auction = ({ auction, className, showBidInput, showForOwner }) => {
       {auction.state === "active" && auction.price > 0 && (
         <span className={infoClass}>Last bid: {auction.price} &euro;</span>
       )}
+      {auction.lastBidUserId && auction.state === "closed" ? (
+        <div className={winnerInfoClass}>
+          <h4>Winning bid: {auction.price}&euro;</h4>
+          <p>User id: {auction.lastBidUserId}</p>
+        </div>
+      ) : (
+        ""
+      )}
       {showForOwner && (
         <button
           className={auction.state !== "closed" ? btnClass : btnClosedClass}
           onClick={changeAuctionState}
         >
-          {auction.state === "active" ? timeleft : auction.state}
+          {auction.state === "active" ? `00:${timeleft}` : auction.state}
         </button>
       )}
       {showBidInput && (
@@ -158,13 +161,7 @@ export const Auction = ({ auction, className, showBidInput, showForOwner }) => {
               Place Bid
             </button>
           </form>
-          <span className={timerClassName}>{timeleft}</span>
-        </div>
-      )}
-      {showWinningBid && (
-        <div>
-          <h4>Winning bid: {auction.price}&euro;</h4>
-          <p>User id: {auction.lastBidUserId}</p>
+          <span className={timerClassName}>00:{timeleft}</span>
         </div>
       )}
     </div>
