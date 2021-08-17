@@ -11,12 +11,14 @@ export const MainContent = () => {
   const [, setAuctions] = useState([]);
   const [isActive, setIsActive] = useState(false);
   const [data, setData] = useContext(AuctionStateContext);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const mainClassName = "main-content";
   const userBtnsWrapper = `${mainClassName}__user-btn-wrapper`;
   const wrapperClass = `${mainClassName}__wrapper`;
   const sideClass = `${mainClassName}__side`;
   const contentClass = `${mainClassName}__content`;
+  const errorMessageClass = `${mainClassName}__error-message`;
 
   const userIsActive = data.users.find((user) => user.id === data.activeUserId);
   const otherUser = data.users.find((user) => user.id !== data.activeUserId);
@@ -34,18 +36,24 @@ export const MainContent = () => {
   };
 
   const addAuction = (auctionName, auctionDescription) => {
-    const newAuction = {
-      name: auctionName,
-      description: auctionDescription,
-      state: "start",
-      auctionEndTime: null,
-      lastBidUserId: null,
-      price: "0",
-    };
-    const list = [...userIsActive.auctionsList, newAuction];
-    userIsActive.auctionsList = list;
-    setData({ ...data });
-    setAuctions(list);
+    if (userIsActive.auctionsList.find((auc) => auc.name === auctionName)) {
+      setErrorMessage("Auction with this name already exists");
+      return;
+    } else {
+      const newAuction = {
+        name: auctionName,
+        description: auctionDescription,
+        state: "start",
+        auctionEndTime: null,
+        lastBidUserId: null,
+        price: "0",
+      };
+      const list = [...userIsActive.auctionsList, newAuction];
+      userIsActive.auctionsList = list;
+      setErrorMessage("");
+      setData({ ...data });
+      setAuctions(list);
+    }
   };
 
   return (
@@ -65,6 +73,7 @@ export const MainContent = () => {
         minDescriptionLength="4"
         addAuction={addAuction}
       />
+      <p className={errorMessageClass}>{errorMessage}</p>
       <div className={wrapperClass}>
         <Sidebar
           className={sideClass}
