@@ -11,6 +11,7 @@ export const Sidebar = ({
   ...other
 }) => {
   const [showBidInput, setShowBidInput] = useState(true);
+
   const mainClassName = "sidebar";
   const mainClass = classNames(mainClassName, className);
   const auctionsListClass = `${mainClassName}__auctions-list`;

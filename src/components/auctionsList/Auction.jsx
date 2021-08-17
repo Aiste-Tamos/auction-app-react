@@ -7,7 +7,6 @@ import "./auction.scss";
 export const Auction = ({ auction, className, showBidInput, showForOwner }) => {
   const [globalState, setGlobalState] = useContext(AuctionStateContext);
   const [priceValue, setPriceValue] = useState(0);
-  const prevPriceRef = useRef();
 
   const calculateTimeleft = () => {
     if (auction.auctionEndTime === null) {
@@ -23,6 +22,7 @@ export const Auction = ({ auction, className, showBidInput, showForOwner }) => {
   };
 
   const [timeleft, setTimeleft] = useState(calculateTimeleft());
+  const prevPriceRef = useRef();
 
   const mainClassName = "auction";
   const mainClass = classNames(mainClassName, className);
@@ -37,19 +37,21 @@ export const Auction = ({ auction, className, showBidInput, showForOwner }) => {
   const infoClass = `${mainClassName}__info`;
   const winnerInfoClass = `${mainClassName}__winner-info`;
 
-  let currentUser = globalState.users.find(
+  const currentUser = globalState.users.find(
     (user) => user.id === globalState.activeUserId
   );
 
-  let otherUser = globalState.users.find(
+  const otherUser = globalState.users.find(
     (user) => user.id !== globalState.activeUserId
   );
 
-  let currentOwnedAuction = currentUser.auctionsList.find(
+  const currentOwnedAuction = currentUser.auctionsList.find(
     (auct) => auct === auction
   );
 
-  let currentAuction = otherUser.auctionsList.find((auct) => auct === auction);
+  const currentAuction = otherUser.auctionsList.find(
+    (auct) => auct === auction
+  );
 
   useEffect(() => {
     var downloadTimer = setInterval(() => {
@@ -58,8 +60,6 @@ export const Auction = ({ auction, className, showBidInput, showForOwner }) => {
         if (auction.auctionEndTime === null) {
           dateNow.setSeconds(dateNow.getSeconds() + 60);
           auction.auctionEndTime = dateNow;
-        } else {
-          // auction.auctionEndTime = new Date(auction.auctionEndTime) - dateNow;
         }
         let seconds = calculateTimeleft();
         setTimeleft(seconds);
@@ -83,7 +83,6 @@ export const Auction = ({ auction, className, showBidInput, showForOwner }) => {
       currentOwnedAuction.auctionEndTime = new Date(
         dateNow.setSeconds(dateNow.getSeconds() + 60)
       );
-
       setGlobalState({ ...globalState });
     }
   };
