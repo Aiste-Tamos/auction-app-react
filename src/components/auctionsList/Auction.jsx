@@ -126,7 +126,7 @@ export const Auction = ({ auction, className, showBidInput, showForOwner }) => {
       {auction.lastBidUserId && auction.state === "closed" ? (
         <div className={winnerInfoClass}>
           <h4>Winning bid: {auction.price}&euro;</h4>
-          <p>User id: {auction.lastBidUserId}</p>
+          <p>Winner user id: {auction.lastBidUserId}</p>
         </div>
       ) : (
         ""

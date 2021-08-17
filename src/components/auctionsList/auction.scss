@@ -2,6 +2,7 @@
     align-items: center;
     border: 1px solid grey;
     border-radius: 2px;
+    color: rgb(58, 58, 58);
     display: flex;
     flex-direction: column;
     max-height: 250px;
@@ -71,8 +72,13 @@
 
     &__winner-info {
         align-items: center;
+        background-color: rgb(255, 219, 57);
+        border-radius: 2px;
         display: flex;
+        font-weight: bold;
         flex-direction: column;
+        margin-bottom: 10px;
+        padding: 5px;
 
         h4, p {
             margin: 0;
