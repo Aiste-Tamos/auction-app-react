@@ -46,8 +46,6 @@ export const MainContent = () => {
     userIsActive.auctionsList = list;
     setData({ ...data });
     setAuctions(list);
-    console.log(list);
-    console.log(data);
   };
 
   return (

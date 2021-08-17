@@ -7,6 +7,7 @@ import "./auction.scss";
 export const Auction = ({ auction, className, showBidInput, showForOwner }) => {
   const [globalState, setGlobalState] = useContext(AuctionStateContext);
   const [priceValue, setPriceValue] = useState(0);
+  const prevPriceRef = useRef();
 
   const calculateTimeleft = () => {
     if (auction.auctionEndTime === null) {
@@ -50,14 +51,6 @@ export const Auction = ({ auction, className, showBidInput, showForOwner }) => {
 
   let currentAuction = otherUser.auctionsList.find((auct) => auct === auction);
 
-  const prevPriceRef = useRef();
-
-  useEffect(() => {
-    prevPriceRef.current = priceValue;
-  });
-
-  const prevPrice = prevPriceRef.current;
-
   useEffect(() => {
     var downloadTimer = setInterval(() => {
       if (auction.state === "active") {
@@ -75,7 +68,6 @@ export const Auction = ({ auction, className, showBidInput, showForOwner }) => {
           clearInterval(downloadTimer);
         }
         setGlobalState({ ...globalState });
-        console.log(globalState);
       }
     }, 1000);
     return () => {
@@ -89,7 +81,7 @@ export const Auction = ({ auction, className, showBidInput, showForOwner }) => {
       let dateNow = new Date();
 
       currentOwnedAuction.auctionEndTime = new Date(
-        dateNow.setSeconds(dateNow.getSeconds() + 5)
+        dateNow.setSeconds(dateNow.getSeconds() + 60)
       );
 
       setGlobalState({ ...globalState });
@@ -98,15 +90,17 @@ export const Auction = ({ auction, className, showBidInput, showForOwner }) => {
 
   const handlePriceSubmit = (e) => {
     e.preventDefault();
+    prevPriceRef.current = priceValue;
+    const prevPrice = currentAuction.price;
+
+    if (priceValue <= prevPrice) {
+      return;
+    }
     if (priceValue > 0) {
       currentAuction.price = priceValue;
       currentAuction.lastBidUserId = currentUser.id;
       addSeconds();
       setGlobalState({ ...globalState });
-    }
-
-    if (priceValue === prevPrice) {
-      e.preventDefault();
     }
   };
 
@@ -155,6 +149,7 @@ export const Auction = ({ auction, className, showBidInput, showForOwner }) => {
                 pattern="[0–9]*"
                 onChange={handlePriceChange}
                 min={priceValue}
+                value={priceValue}
               />
             </label>
             <button className={priceSubmitbtn} type="submit" value="Submit">
